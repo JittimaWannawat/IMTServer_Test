@@ -1,7 +1,7 @@
 node {
-    def githubRepoName = 'imt.server'
+    def githubRepoName = 'Imt.Server'
     def registry = '041736873643.dkr.ecr.ap-southeast-1.amazonaws.com'
-    def registryName = 'imt.server';
+    def registryName = 'Imt.Server';
     def ns = 'development'
     def cluster = 'kollective'
     def tag
