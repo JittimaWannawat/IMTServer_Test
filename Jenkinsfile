@@ -1,5 +1,4 @@
-pipeline {
-    cleanWs()
+node {
     def githubRepoName = 'imt.server'
     def registry = '041736873643.dkr.ecr.ap-southeast-1.amazonaws.com'
     def registryName = 'imt.server';
@@ -20,34 +19,6 @@ pipeline {
       } 
       tag = "$ns-$tagVersion"
       sh "echo 'Build number by tag version:' $tagVersion"
-    }
-
-    stage('SonarQube Analysis') {
-      nodejs(nodeJSInstallationName: 'node') {
-        def scannerHome = tool 'SonarScanner'
-        withSonarQubeEnv() {
-          sh "${scannerHome}/bin/sonar-scanner"
-        }
-      }
-    }
-
-    stage('Unit Test') { }
-
-    stage ('Build Image') {
-      //sh "echo 'Build Image: API'"
-      //if (env.BRANCH_NAME == 'develop') {
-      //  sh "docker build --build-arg environment=Development -t $registry/$registryName:$tag ."
-      //} else if (env.BRANCH_NAME == 'staging') {
-      //  sh "docker build --build-arg environment=Staging -t $registry/$registryName:$tag ."
-      //} else {
-      //  sh "docker build --build-arg environment=Production -t $registry/$registryName:$tag ."
-      //}
-    }
-
-    stage ('Push Image') {
-        //docker.withRegistry("https://$registry", 'ecr:ap-southeast-1:Jenkins') {
-        //  sh "docker push $registry/$registryName:$tag"
-        //}
     }
 
     stage ('Deploy') {
