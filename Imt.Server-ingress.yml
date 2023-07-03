@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: imt-server-ingress
+    labels:
+      app: imt-server
+    annotations:
+      alb.ingress.kubernetes.io/scheme: internet-facing
+      alb.ingress.kubernetes.io/target-type: ip
+      alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80,"HTTPS": 443}]'
+      # alb.ingress.kubernetes.io/ssl-redirect: '443'
+      alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-southeast-1:041736873643:certificate/0d9517a1-319b-420d-8242-6a93b884ac47
+spec:
+    rules:
+    - host: internal-tool-api.kolify.one
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: imt-server-service
+              port:
+                number: 80
+    ingressClassName: alb
+    tls: # < placing a host in the TLS config will indicate a certificate should be created
+    - hosts:
+      - internal-tool-api.kolify.one
+      # secretName: kozyhouse.one-tls # < cert-manager will store the created certificate in this secret.
