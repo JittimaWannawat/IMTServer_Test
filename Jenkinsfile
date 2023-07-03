@@ -1,4 +1,4 @@
-node('slave') {
+pipeline {
     cleanWs()
     def githubRepoName = 'imt.server'
     def registry = '041736873643.dkr.ecr.ap-southeast-1.amazonaws.com'
