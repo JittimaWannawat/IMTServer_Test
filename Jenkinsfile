@@ -34,15 +34,16 @@ node {
 
       if (env.BRANCH_NAME != 'main') {
         def suffix = "$ns";
-
+       
+	  def ymlApiIngress = ""
         // Ingress
       if (env.BRANCH_NAME != 'main') { // Develop + Staging
-        def ymlApiIngress = "$githubRepoName-ingress-${suffix}.yml"
+        ymlApiIngress = "$githubRepoName-ingress-${suffix}.yml"
         def dataApiIngress = readYaml file: ymlApiIngress
         dataApiIngress.spec.rules[0].host = "it-api-${suffix}.kolify.one"
         dataApiIngress.spec.tls[0].hosts[0] = "it-api-${suffix}.kolify.one"
       }else{
-        def ymlApiIngress = "$githubRepoName-ingress.yml"
+        ymlApiIngress = "$githubRepoName-ingress.yml"
         def dataApiIngress = readYaml file: ymlApiIngress
         dataApiIngress.spec.rules[0].host = "internal-tool-api.kolify.one"
         dataApiIngress.spec.tls[0].hosts[0] = "internal-tool-api.kolify.one"
