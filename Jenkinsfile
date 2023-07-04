@@ -34,9 +34,6 @@ node {
 
       if (env.BRANCH_NAME != 'main') {
         def suffix = "$ns";
-        if(ns == 'develop') {
-          suffix = 'dev'
-        }
 
         // Ingress
       if (env.BRANCH_NAME != 'main') { // Develop + Staging
